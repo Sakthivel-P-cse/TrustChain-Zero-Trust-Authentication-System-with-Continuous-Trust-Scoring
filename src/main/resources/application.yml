@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql:trustchain}
+    username: ${DB_USER:trustchain}
+    password: ${DB_PASSWORD:trustchain}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+  threads:
+    virtual:
+      enabled: true
+  flyway:
+    enabled: true
+
+trustchain:
+  jwt:
+    secret: ${JWT_SECRET}
+    service-secret: ${SERVICE_JWT_SECRET}
+    access-token-ttl: 900
+    refresh-token-ttl: 86400
+    service-token-ttl: 60
+  trust:
+    full-access-threshold: 70
+    read-only-threshold: 40
+    max-recovery-without-reauth: 80
+  session:
+    sliding-window-seconds: 60
+    rate-threshold-multiplier: 3
+    failed-permission-window-minutes: 10
+    failed-permission-threshold: 3
+  demo:
+    enabled: ${TRUSTCHAIN_DEMO_ENABLED:false}
+    trust-forwarded-for: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
